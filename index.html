@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0e14">
+  <title>Tools & Media Library</title>
+  <meta name="description" content="A curated archive of useful tools, media resources, and projects.">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="hero panel">
+      <p class="eyebrow">SENTAI TOOLBOX</p>
+      <h1>Tools &amp; Media Library</h1>
+      <p class="lede">A hand-picked archive for better tools, better media, and fewer dead ends.</p>
+      <div class="toolbar">
+        <label class="search"><span>Search</span><input id="search" type="search" placeholder="Search projects, sites, or categories" autocomplete="off"></label>
+        <label class="select"><span>Category</span><select id="category"><option value="all">All categories</option></select></label>
+        <label class="select"><span>Order</span><select id="sort"><option value="featured">Featured first</option><option value="name">Name A–Z</option><option value="stars">Most GitHub stars</option></select></label>
+      </div>
+      <p id="count" class="count">Loading library…</p>
+    </header>
+    <section id="grid" class="grid" aria-live="polite"></section>
+    <section id="empty" class="empty panel" hidden>
+      <h2>No matches found</h2>
+      <p>Try another search or clear the category filter.</p>
+    </section>
+  </main>
+  <template id="card-template">
+    <article class="card panel">
+      <div class="card-top"><span class="category"></span><span class="pick" hidden>Ginyu’s Pick</span></div>
+      <h2></h2>
+      <p class="description"></p>
+      <div class="meta"></div>
+      <a class="open" target="_blank" rel="noreferrer">Open resource <span aria-hidden="true">↗</span></a>
+    </article>
+  </template>
+  <script src="assets/app.js"></script>
+</body>
+</html>

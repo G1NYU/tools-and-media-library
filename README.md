@@ -1,38 +1,29 @@
 # Tools & Media Library
 
-A public, anonymous resource directory built from the Sentai `#toolbox` Discord export. It is a static HTML/CSS/JS site designed for GitHub Pages.
+A public, anonymous resource directory built from a Sentai `#toolbox` export. It is a static HTML/CSS/JS GitHub Pages site.
 
-## About the Discord files
+## No local setup needed
 
-Nothing is wrong with your JSON export. The limitation was this chat's attachment search reader: it could see the file exists but did not resolve its internal file ID, so it could not safely parse 3.4 MB of JSON here.
+Use the deployed site’s **Import export** tab:
 
-The TXT and HTML exports work well too. Use the HTML export if you want richer surrounding context, or TXT if you mainly want URLs and plain message text. The included parser currently accepts DiscordChatExporter JSON; use JSON locally because it preserves message authors, allowing the repeated-post **Ginyu’s Pick** rule to work accurately.
+1. Choose the DiscordChatExporter `.json` or `.txt` file.
+2. Enter your Discord name, `ginyu` by default.
+3. Select **Build & fetch GitHub stars**.
+4. Download the generated `links.json`.
+5. On GitHub, open `data/links.json`, choose **Edit**, replace its contents with the downloaded file, then commit.
 
-## Build public data
+The import runs entirely in your browser. Your Discord export is never uploaded, stored, or committed. JSON is best because it preserves author data and can mark repositories you posted repeatedly as **Ginyu’s Pick**. TXT still extracts and organizes links but cannot reliably identify which posts were yours. GitHub projects at 1,000+ stars get **Ginyu’s Pick** automatically in either mode.
 
-Keep all raw Discord exports out of Git history. Put the export next to this repository and run:
+## Optional command line path
+
+The scripts remain available if preferred:
 
 ```bash
 python scripts/build_links.py SENTAI-social-toolbox-446037106792595456.json --ginyu ginyu
-```
-
-This creates `data/links.json` with unique URLs, inferred categories, link context, and repeat-post picks. Review descriptions before committing because Discord context can be noisy.
-
-## Refresh GitHub stars
-
-Run this after generating the data:
-
-```bash
 python scripts/update_stars.py
 ```
 
-It queries GitHub for every detected repository, writes each current `githubStars` count, and automatically marks a repository as **Ginyu’s Pick** at 1,000 stars. For much higher API limits, create a fine-grained GitHub token with read-only public metadata access and run:
-
-```bash
-GITHUB_TOKEN=your_token_here python scripts/update_stars.py
-```
-
-Never commit the token. The parser preserves a repeated-post pick even when a project has fewer than 1,000 stars.
+Keep raw Discord exports out of Git history.
 
 ## Publish
 

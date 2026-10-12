@@ -2,19 +2,37 @@
 
 A public, anonymous resource directory built from the Sentai `#toolbox` Discord export. It is a static HTML/CSS/JS site designed for GitHub Pages.
 
-## Build the public data
+## About the Discord files
 
-Keep the raw Discord export out of Git history. Run the parser locally:
+Nothing is wrong with your JSON export. The limitation was this chat's attachment search reader: it could see the file exists but did not resolve its internal file ID, so it could not safely parse 3.4 MB of JSON here.
+
+The TXT and HTML exports work well too. Use the HTML export if you want richer surrounding context, or TXT if you mainly want URLs and plain message text. The included parser currently accepts DiscordChatExporter JSON; use JSON locally because it preserves message authors, allowing the repeated-post **Ginyu’s Pick** rule to work accurately.
+
+## Build public data
+
+Keep all raw Discord exports out of Git history. Put the export next to this repository and run:
 
 ```bash
 python scripts/build_links.py SENTAI-social-toolbox-446037106792595456.json --ginyu ginyu
 ```
 
-This creates `data/links.json` with unique URLs, inferred categories, link context, and Ginyu repeat-post picks. Review descriptions before committing because Discord context can be noisy.
+This creates `data/links.json` with unique URLs, inferred categories, link context, and repeat-post picks. Review descriptions before committing because Discord context can be noisy.
 
-## GitHub stars and picks
+## Refresh GitHub stars
 
-For GitHub entries, fill `githubStars` in `data/links.json` from the repository's current GitHub star count. A repository gets the **Ginyu’s Pick** badge when it has at least 1,000 stars or was posted by Ginyu at least twice. The included parser handles the repeat-post rule; apply the 1,000-star rule when refreshing star data.
+Run this after generating the data:
+
+```bash
+python scripts/update_stars.py
+```
+
+It queries GitHub for every detected repository, writes each current `githubStars` count, and automatically marks a repository as **Ginyu’s Pick** at 1,000 stars. For much higher API limits, create a fine-grained GitHub token with read-only public metadata access and run:
+
+```bash
+GITHUB_TOKEN=your_token_here python scripts/update_stars.py
+```
+
+Never commit the token. The parser preserves a repeated-post pick even when a project has fewer than 1,000 stars.
 
 ## Publish
 

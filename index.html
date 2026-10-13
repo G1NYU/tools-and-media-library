@@ -3,33 +3,58 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#090712">
+<meta name="theme-color" content="#080808">
 <title>Tools & Media Library</title>
-<meta name="description" content="A curated archive of useful tools, media resources, and projects.">
+<meta name="description" content="A curated browser for useful tools, media, and resources.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-<div class="wallpaper" aria-hidden="true"></div>
-<div class="vignette" aria-hidden="true"></div>
-<main class="shell">
-<header class="hero">
-  <div class="hero-top"><a class="brand" href="#library"><span class="brand-mark">S</span><span>SENTAI<br><i>ARCHIVE</i></span></a><div class="hero-status"><span></span> PUBLIC RESOURCE INDEX</div></div>
-  <div class="hero-copy"><p class="eyebrow">001 / THE AFTERIMAGE COLLECTION</p><h1>TOOLS <em>&amp;</em><br>MEDIA<span>.</span></h1><p class="lede">A midnight shelf of software, rabbit holes, obscure utilities, and media resources worth keeping.</p></div>
-  <div class="hero-footer"><p>CURATED BY G1NYU</p><a href="#library">ENTER THE ARCHIVE <b>↓</b></a></div>
-</header>
-<section id="library" class="view active">
-  <div id="featured" class="featured" hidden><div class="section-kicker"><span>01</span><p>Ginyu's Picks</p><small>THE ESSENTIAL SHELF</small></div><section id="featured-grid" class="featured-grid"></section></div>
-  <div class="library-head"><div class="section-kicker"><span>02</span><p>The Full Archive</p><small>DISCOVER SOMETHING USEFUL</small></div><p id="count" class="count">Loading library…</p></div>
-  <div class="toolbar"><label class="search"><span>Search the archive</span><input id="search" type="search" placeholder="Type a project, site, or rabbit hole…" autocomplete="off"></label><label class="select"><span>Section</span><select id="category"><option value="all">All categories</option></select></label><label class="select"><span>Sequence</span><select id="sort"><option value="featured">Curator order</option><option value="name">Name A–Z</option><option value="stars">GitHub stars</option></select></label></div>
-  <section id="grid" class="grid" aria-live="polite"></section>
-  <section id="empty" class="empty" hidden><p>NO SIGNAL FOUND</p><h2>Nothing lives here yet.</h2><button type="button" onclick="document.getElementById('search').value='';document.getElementById('category').value='all';document.getElementById('search').dispatchEvent(new Event('input'))">Clear the filters</button></section>
-</section>
-<section id="import" class="view admin-view"><div class="importer"><p class="eyebrow">LOCAL-ONLY IMPORT</p><h2>Build the archive from a Discord export</h2><p>Your export remains in this browser. Generated descriptions are neutral and public-safe filtering runs before any data is downloaded.</p><div class="import-controls"><label><span>DiscordChatExporter JSON or TXT</span><input id="export-file" type="file" accept=".json,.txt,application/json,text/plain"></label><label><span>Your Discord name</span><input id="ginyu-name" value="ginyu" placeholder="ginyu"></label><button id="build" class="primary">Build &amp; fetch stars</button></div><p id="import-status" class="notice">Choose an export, then build. No Discord messages are uploaded.</p><div id="download-wrap" hidden><a id="download" class="primary" download="links.json">Download links.json</a></div></div></section>
+<main class="container">
+  <header class="hero">
+    <div class="hero-label">G1NYU'S RESOURCE INDEX</div>
+    <h1>TOOLS <span>&amp;</span><br>MEDIA</h1>
+    <p>Useful software, creative tools, media apps, learning resources, and game utilities—organized by category and named like actual products.</p>
+  </header>
+
+  <section class="browser" aria-labelledby="browse-title">
+    <div class="section-head">
+      <div>
+        <p class="section-label">BROWSE THE LIBRARY</p>
+        <h2 id="browse-title">Pick a category.</h2>
+      </div>
+      <p id="count" class="count">Loading…</p>
+    </div>
+    <nav id="categories" class="categories" aria-label="Resource categories"></nav>
+    <label class="search">
+      <span>SEARCH RESOURCES</span>
+      <input id="search" type="search" autocomplete="off" placeholder="Search by resource name or purpose…">
+    </label>
+  </section>
+
+  <section id="resources" class="resources" aria-live="polite"></section>
+  <section id="empty" class="empty" hidden>
+    <p>NO SIGNAL FOUND</p>
+    <h2>Nothing matches that search.</h2>
+    <button id="clear" type="button">CLEAR SEARCH</button>
+  </section>
 </main>
-<template id="card-template"><article class="card"><div class="card-top"><span class="category"></span><span class="pick" hidden>Ginyu’s Pick</span></div><h2></h2><p class="description"></p><div class="meta"></div><a class="open" target="_blank" rel="noreferrer">Open resource <span aria-hidden="true">↗</span></a></article></template>
+
+<footer class="site-footer">
+  <strong>G1NYU</strong>
+  <span>Curated resources · open a card to visit its source</span>
+</footer>
+
+<template id="card-template">
+  <article class="resource-card">
+    <div class="card-top"><span class="card-category"></span><span class="pick" hidden>Ginyu's Pick</span></div>
+    <h3></h3>
+    <p class="description"></p>
+    <a class="open" target="_blank" rel="noreferrer">OPEN RESOURCE <span aria-hidden="true">↗</span></a>
+  </article>
+</template>
 <script src="assets/app.js"></script>
 </body>
 </html>
